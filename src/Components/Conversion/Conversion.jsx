@@ -7,7 +7,7 @@ import "./Conversion.css";
 
 const defaultResult = { text: "", success: undefined };
 
-export default function Conversion({ title, description, convertString }) {
+export default function Conversion({ title, description, convertString, setHistory }) {
   const [inputValue, setInputValue] = useState("");
   const [{ text, success }, setResult] = useState(defaultResult);
   const { pathname } = useLocation();
@@ -19,6 +19,11 @@ export default function Conversion({ title, description, convertString }) {
     setInputValue("");
     setResult(defaultResult);
   };
+
+  const run = (record) => {
+    setResult(record);
+    setHistory((prev) => [...prev, record]);
+  }
 
   useEffect(() => {
     clear();
@@ -54,7 +59,7 @@ export default function Conversion({ title, description, convertString }) {
           <Button
             size="large"
             type="primary"
-            onClick={() => inputValue && setResult(convertString(inputValue))}
+            onClick={() => inputValue && run(convertString(inputValue))}
             htmlType="submit"
           >
             Выполнить

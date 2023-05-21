@@ -21,15 +21,8 @@ const columns = [
   { title: "Выполнено в", dataIndex: "date" },
 ];
 
-export default function ConversionHistory() {
-  const [dataSource, setDataSource] = useState(
-    JSON.parse(localStorage.getItem("actionsList")) || []
-  );
-
-  const clearHistory = () => {
-    localStorage.removeItem("actionsList");
-    setDataSource([]);
-  };
+export default function ConversionHistory({history, setHistory}) {
+  const clearHistory = () => setHistory([]);
 
   return (
     <>
@@ -39,7 +32,7 @@ export default function ConversionHistory() {
         </Button>
       </div>
       <Table
-        dataSource={dataSource}
+        dataSource={history}
         columns={columns}
         rowKey={(_, index) => index}
         size="large"
